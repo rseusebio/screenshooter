@@ -4,24 +4,6 @@ from selenium import webdriver
 from selenium.webdriver import ChromeOptions, Chrome
 import pyscreenshot
 
-base_directory = os.path.dirname(os.path.abspath(__file__))
-chrome_path = os.path.join(base_directory, 'chromedriver_linux64/chromedriver')
-
-def start_chrome_driver(chrome_path = None):
-    if chrome_path  == None:
-        raise ValueError("Enter a path to the chrome driver executable.")
-    elif type(chrome_path) != str:
-        raise TypeError("Enter a string contain the path to the chrome driver executable.")
-    else:
-        try:
-            chrome_options = ChromeOptions()
-            # chrome_options.add_argument('--headless')
-            driver = Chrome(chrome_path, chrome_options=chrome_options)
-            return driver
-        except Exception as err:
-            print("An error has occurred")
-            raise err
-
 def start_python_doc_scan(driver=None):
     if type(driver) != Chrome:
         raise TypeError("The driver must be an Chrome class instance.")
