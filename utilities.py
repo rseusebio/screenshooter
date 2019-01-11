@@ -1,6 +1,8 @@
 import os
 import time
-from selenium.webdriver import Chrome, ChromeOptions
+from selenium.webdriver import Chrome, ChromeOptions, ActionChains
+from selenium.webdriver.common.keys import Keys
+
 import pyscreenshot
 
 base_directory = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +34,11 @@ def start_chrome_driver(chrome_path = chrome_path, headless = False):
         except Exception as err:
             print("An error has occurred")
             raise err
+def test_if_alert_poped_up(driver):
+    action = ActionChains(driver)
+    action.key_down(Keys.ENTER)
+    action.perform()
+
 
 def scroll_down_to_the_bottom(driver, printscreen=False, file_path=None):
     if type(file_path) != str:
@@ -40,7 +47,8 @@ def scroll_down_to_the_bottom(driver, printscreen=False, file_path=None):
         count = 1
         while True:
             try:
-                time.sleep(0.2)
+                test_if_alert_poped_up(driver)
+                time.sleep(0.1)
                 if printscreen:
                     img = pyscreenshot.grab()
                     img.save('{1}{0}.png'.format(count, file_path))

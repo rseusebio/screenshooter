@@ -4,7 +4,7 @@ from selenium.webdriver import Chrome
 from utilities import scroll_down_to_the_bottom, start_chrome_driver, chrome_path
 
 # Some Global Variables
-main_vue_folder = "./vue_get_started/"
+main_vue_folder = "./vue_getting_started/"
 page_folder_name = "vuepage"
 
 def scan_vue_documentation(driver = None):
@@ -32,13 +32,18 @@ def find_next_link(driver = None):
             print(err)
             return None
 
-def scan_single_page(number):
+def scan_single_page(number, same_folder=False):
     if type(number) == int:
-        folder_path = os.path.join(main_vue_folder, page_folder_name + "{0}/".format(number))
-        file_path = os.path.join(folder_path, "vue")
-        print("folder_path = {0} and file_path = {1}".format(folder_path, file_path))
-        os.mkdir(folder_path)
-        scroll_down_to_the_bottom(driver, True, file_path)
+        if same_folder:
+            folder_path = os.path.join(main_vue_folder, page_folder_name + "{0}/".format(number))
+            file_path = os.path.join(folder_path, "vue")
+            print("folder_path = {0} and file_path = {1}".format(folder_path, file_path))
+            os.mkdir(folder_path)
+            scroll_down_to_the_bottom(driver, True, file_path)
+        else:
+            file_path = os.path.join(main_vue_folder, page_folder_name + "{0}_".format(number))
+            print("file_path = {0}".format(file_path))
+            scroll_down_to_the_bottom(driver, True, file_path)
     else:
         raise TypeError("number param must be an integer.")
 
